@@ -4,7 +4,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var apiKey = document.getElementById('api_key').value;
     var query = document.getElementById('query').value;
 
-    fetch('https://171h34v184.imdo.co/query', {
+    fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
