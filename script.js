@@ -4,7 +4,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var apiKey = document.getElementById('api_key').value;
     var query = document.getElementById('query').value;
 
-    fetch('http://localhost:5000/query', {
+    fetch('http://171h34v184.imdo.co:5000/query', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
