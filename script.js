@@ -12,8 +12,8 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         body: JSON.stringify({
             api_key: apiKey,
             query: query,
-            V_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\C_Image_Vision\\4_Embedding\\3_Embedding\\Getered_embd.csv',  // 这里填写你的CSV文件路径
-            L_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\B_Case_Study\\Content_csv\\TestRun2\\Content\\4_向量.csv',  // 同上
+            V_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\C_Image_Vision\\4_Embedding\\3_Embedding\\Getered_embd.csv',  
+            L_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\B_Case_Study\\Content_csv\\TestRun2\\Content\\4_向量.csv',  
         }),
     })
     .then(response => response.json())
