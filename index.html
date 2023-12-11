@@ -28,20 +28,30 @@
             text-align: right;
             margin-bottom: 20px;
         }
+
+
         #queryForm {
             font-family: 'Arial', sans-serif;
-            border: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
             padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: fit-content; /* Adjusts the width of the form to its content */
-            align-self: flex-end; /* Aligns the form to the right */
-        }
-        #queryForm label, #queryForm input, #queryForm input[type=submit] {
-            display: block; /* Makes each form element take a full row */
-            text-align: right; /* Aligns text to the right */
             width: 100%;
+            box-sizing: border-box;
         }
-       /* ... [previous styles] ... */
+
+        #queryForm label {
+            text-align: right;
+            display: block;
+            margin-bottom: 0px;
+        }
+
+        #queryForm input[type="text"], #queryForm input[type="submit"] {
+            width: 200px; /* Adjust as needed */
+            margin-left: auto; /* Aligns the input to the right */
+            display: block;
+            margin-top: 0; /* Removes top margin from inputs */
+            margin-bottom: 10px; /* Space below each input field */
+        }
 
        .right-section a:link { /* Normal unvisited link */
             color: #00c7bd; /* Light blue color */
