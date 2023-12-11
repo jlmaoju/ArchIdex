@@ -52,7 +52,7 @@ function displayResults(data) {
     // 创建和显示视觉相似度结果的超链接
     if (visualResults.length > 0) {
         var visualHeader = document.createElement('h2');
-        visualHeader.textContent = '视觉相似度查询结果：';
+        visualHeader.textContent = '视觉方面找到这些：';
         resultsDiv.appendChild(visualHeader);
 
         var visualList = document.createElement('ul');
@@ -71,7 +71,7 @@ function displayResults(data) {
     // 创建和显示逻辑相似度结果的超链接
     if (logicalResults.length > 0) {
         var logicalHeader = document.createElement('h2');
-        logicalHeader.textContent = '逻辑相似度查询结果：';
+        logicalHeader.textContent = '逻辑方面找到这些：';
         resultsDiv.appendChild(logicalHeader);
 
         var logicalList = document.createElement('ul');

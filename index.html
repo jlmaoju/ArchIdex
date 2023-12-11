@@ -28,7 +28,10 @@
             text-align: right;
             margin-bottom: 20px;
         }
-
+        p {
+            text-align: right;
+            margin-bottom: 0px;
+        }
 
         #queryForm {
             font-family: 'Arial', sans-serif;
@@ -70,13 +73,14 @@
 <body>
     <div class="left-section">
         <h1>欢迎来到描述性查询，查你所想</h1>
+        <p>来吧，我会用真实案例回答你的问题。</p>
         <form id="queryForm">
             <label for="api_key">API Key:</label><br>
             <input type="text" id="api_key" name="api_key"><br>
-            <label for="query">查询内容:</label><br>
+            <label for="query">问题是什么:</label><br>
             <input type="text" id="query" name="query"><br>
             <input type="submit" value="提交查询">
-            <div id="loadingMessage" style="display:none;">正在查询，请稍候...那啥，确实挺慢的，估计得好几十秒，以后会优化！先等等</div>
+            <div id="loadingMessage" style="display:none;">正在翻书，请稍候...那啥，确实挺慢的，估计得好几十秒，以后会优化！先等等</div>
         </form>
     </div>
     <div class="right-section" id="results">
