@@ -2,22 +2,76 @@
 <html>
 <head>
     <title>查询界面</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .left-section, .right-section {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .left-section {
+            background-color: white;
+            align-items: flex-end; /* Aligns content to the right */
+        }
+        .right-section {
+            background-color: rgb(58, 58, 58);
+            color: white;
+            align-items: flex-start; /* Aligns content to the left */
+        }
+        h1 {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        #queryForm {
+            font-family: 'Arial', sans-serif;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: fit-content; /* Adjusts the width of the form to its content */
+            align-self: flex-end; /* Aligns the form to the right */
+        }
+        #queryForm label, #queryForm input, #queryForm input[type=submit] {
+            display: block; /* Makes each form element take a full row */
+            text-align: right; /* Aligns text to the right */
+            width: 100%;
+        }
+       /* ... [previous styles] ... */
+
+       .right-section a:link { /* Normal unvisited link */
+            color: #00c7bd; /* Light blue color */
+        }
+
+        .right-section a:visited { /* Visited link */
+            color: #399fff; /* Custom color for visited links */
+        }
+
+        .right-section a:active { /* Active link - when the link is being clicked */
+            color: #FF4500; /* Custom color for active links */
+        }
+
+    </style>
 </head>
 <body>
-    <h1>欢迎使用查询服务</h1>
-    <form id="queryForm">
-        <label for="api_key">API Key:</label><br>
-        <input type="text" id="api_key" name="api_key"><br>
-        <label for="query">查询内容:</label><br>
-        <input type="text" id="query" name="query"><br>
-        <input type="submit" value="提交查询">
-        <div id="loadingMessage" style="display:none;">正在查询，请稍候...那啥，确实挺慢的，估计得好几十秒，以后会优化！先等等</div>
-    </form>
-
-    <div id="results">
+    <div class="left-section">
+        <h1>欢迎来到描述性查询，查你所想</h1>
+        <form id="queryForm">
+            <label for="api_key">API Key:</label><br>
+            <input type="text" id="api_key" name="api_key"><br>
+            <label for="query">查询内容:</label><br>
+            <input type="text" id="query" name="query"><br>
+            <input type="submit" value="提交查询">
+            <div id="loadingMessage" style="display:none;">正在查询，请稍候...那啥，确实挺慢的，估计得好几十秒，以后会优化！先等等</div>
+        </form>
+    </div>
+    <div class="right-section" id="results">
         <!-- 查询结果将显示在这里 -->
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
