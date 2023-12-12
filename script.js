@@ -22,8 +22,6 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         body: JSON.stringify({
             api_key: apiKey,
             query: query,
-            V_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\C_Image_Vision\\4_Embedding\\3_Embedding\\Getered_embd.csv',  
-            L_csv_file_path: 'A:\\RISE\\LLM-Archi Dev\\B_Case_Study\\Content_csv\\TestRun2\\Content\\4_向量.csv',  
         }),
     })
     .then(response => response.json())
@@ -42,48 +40,149 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     });
 });
 
-function displayResults(data) {
-    var resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';  // 清除旧的结果
+function adjustLayout() {
+    const leftSection = document.querySelector('.left-section');
+    const rightSection = document.querySelector('.right-section');
 
-    var visualResults = data.visual;
-    var logicalResults = data.logical;
+    leftSection.style.flex = '0.5';
+    rightSection.style.flex = '2';
+}
 
-    // 创建和显示视觉相似度结果的超链接
-    if (visualResults.length > 0) {
-        var visualHeader = document.createElement('h2');
-        visualHeader.textContent = '视觉方面找到这些：';
-        resultsDiv.appendChild(visualHeader);
+function displayExplanation(text) {
+    const explanationContainer = document.querySelector('.left-section');
+    explanationContainer.innerHTML = ''; // 清空现有内容
 
-        var visualList = document.createElement('ul');
-        visualResults.forEach(function(url) {
-            var listItem = document.createElement('li');
-            var link = document.createElement('a');
-            link.href = url;  // 设置超链接的 URL
-            link.textContent = url;  // 设置链接显示的文本
-            link.target = '_blank';  // 设置链接在新窗口中打开
-            listItem.appendChild(link);
-            visualList.appendChild(listItem);
+    let index = 0;
+    let tagOpen = false; // 是否在HTML标签内
+
+    const interval = setInterval(() => {
+        if (index < text.length) {
+            let char = text.charAt(index);
+            // 检查是否遇到了HTML标签
+            if (char === '<') tagOpen = true;
+            if (char === '>') tagOpen = false;
+
+            explanationContainer.innerHTML += char;
+
+            // 如果不在HTML标签内，则正常逐字显示；如果在标签内，则继续直到标签闭合
+            if (!tagOpen || char === '>') {
+                index++;
+            }
+        } else {
+            clearInterval(interval);
+        }
+    }, 50); // 每50毫秒添加一个字符
+}
+
+
+function displayQueryResults(projectUrls, imageUrls) {
+    if (projectUrls && imageUrls && projectUrls.length === imageUrls.length) {
+        projectUrls.forEach(function(projectUrl, index) {
+            var img = document.createElement('img');
+            img.src = imageUrls[index];
+            img.className = 'grid-image'; // 使用 CSS 类来控制样式
+
+            // 添加点击事件，当点击图片时，在新窗口打开对应的项目网页
+            img.onclick = function() {
+                window.open(projectUrl, '_blank');
+            };
+
+            document.querySelector('.right-section').appendChild(img);
         });
-        resultsDiv.appendChild(visualList);
-    }
-
-    // 创建和显示逻辑相似度结果的超链接
-    if (logicalResults.length > 0) {
-        var logicalHeader = document.createElement('h2');
-        logicalHeader.textContent = '逻辑方面找到这些：';
-        resultsDiv.appendChild(logicalHeader);
-
-        var logicalList = document.createElement('ul');
-        logicalResults.forEach(function(url) {
-            var listItem = document.createElement('li');
-            var link = document.createElement('a');
-            link.href = url;  // 设置超链接的 URL
-            link.textContent = url;  // 设置链接显示的文本
-            link.target = '_blank';  // 设置链接在新窗口中打开
-            listItem.appendChild(link);
-            logicalList.appendChild(listItem);
-        });
-        resultsDiv.appendChild(logicalList);
     }
 }
+
+function escapeHTML(str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+
+
+function displayResults(data) {
+    // 清空既有内容
+    // document.querySelector('.left-section').innerHTML = '';
+    document.querySelector('.right-section').innerHTML = '';
+
+    // // 处理图片和项目网页 URL
+    // var images = data.images;
+    // var projectUrls = data.visual; // 获取项目网页 URL 数组
+
+    // if (images && images.length > 0) {
+    //     images.forEach(function(imageUrl, index) {
+    //         var img = document.createElement('img');
+    //         img.src = imageUrl;
+    //         img.className = 'grid-image'; // 使用 CSS 类来控制样式
+
+    //         // 添加点击事件，当点击图片时，在新窗口打开对应的项目网页
+    //         if (projectUrls && projectUrls[index]) {
+    //             img.onclick = function() {
+    //                 window.open(projectUrls[index], '_blank');
+    //             };
+    //         }
+
+    //         document.querySelector('.right-section').appendChild(img);
+    //     });
+    // }
+
+    // 处理视觉查询结果
+    displayQueryResults(data.visual, data.images);
+
+    // 处理逻辑查询结果
+    displayQueryResults(data.logical, data.L_images);    
+
+    // // 处理解释性文字
+    // var explanationText = "1. 关键信息提取：该项目名为..."; // 示例文本
+    // if (explanationText) {
+    //     displayExplanation(explanationText);
+    // }
+
+    var query = document.getElementById('query').value;
+    var escapedQuery = escapeHTML(query);
+
+
+    // 使用模板字符串嵌入变量
+    var explanationText = `久等啦！<br>关于<strong>${escapedQuery}</strong>这件事情，<br>
+    我从还比较有限的记忆中找到了一些关相关的案例，<br>
+    列在了右侧。<br><br>
+
+    这里面有些是单纯因为想起了这个画面，<br>
+    有些则是我确实记得这个项目里有类似的问题和设计逻辑。<br>
+    说不太好，不过我相信这些案例多多少少一定可以帮到你的。<br><br>
+    
+    另外，我的阅历还在增长中，<br>
+    如果这些案例中没有你想要的，<br>
+    请给我点成长的时间，我会继续努力~<br><br>
+
+    （开始下一次查询请直接刷新网页）
+    `;
+    const explanationContainer = document.querySelector('.left-section');
+    explanationContainer.innerHTML = explanationText;
+
+
+
+    // 调整布局
+    adjustLayout();
+}
+
+    if (images.length > 0) {
+        var imagesContainer = document.createElement('div');
+        images.forEach(function(imageUrl) {
+            var img = document.createElement('img');
+            img.src = imageUrl;
+            img.style.width = '100px'; // 调整尺寸
+            img.style.height = 'auto';
+            img.style.margin = '5px';
+            imagesContainer.appendChild(img);
+
+            // // 鼠标悬停效果
+            // img.onmouseover = () => img.style.opacity = '0.7';
+            // img.onmouseout = () => img.style.opacity = '1';
+        });
+        document.querySelector('.right-section').appendChild(imagesContainer);
+    }
+    displayExplanation(explanationText);
