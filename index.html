@@ -2,98 +2,7 @@
 <html>
 <head>
     <title>查询界面</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            height: 100vh;
-        }
-        .left-section, .right-section {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .left-section {
-            background-color: white;
-            align-items: flex-end; /* Aligns content to the right */
-            overflow-y: hidden;
-            text-align: right; /* 设置文本靠右对齐 */
-        }
-        .right-section {
-            overflow-y: auto;
-            background-color: rgb(32, 32, 32);
-            color: white;
-            align-items: flex-start; /* Aligns content to the left */
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 创建 4 列 */
-            grid-template-rows: repeat(10, 1fr); /* 创建 10 行 */
-            gap: 0px; /* 设置网格间距 */
-        }
-        h1 {
-            text-align: right;
-            margin-bottom: 20px;
-        }
-        p {
-            text-align: right;
-            margin-bottom: 0px;
-        }
-
-        #queryForm {
-            font-family: 'Arial', sans-serif;
-            border-top: 1px solid #ccc;
-            border-bottom: 1px solid #ccc;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        #queryForm label {
-            text-align: right;
-            display: block;
-            margin-bottom: 0px;
-        }
-
-        #queryForm input[type="text"], #queryForm input[type="submit"] {
-            width: 200px; /* Adjust as needed */
-            margin-left: auto; /* Aligns the input to the right */
-            display: block;
-            margin-top: 0; /* Removes top margin from inputs */
-            margin-bottom: 10px; /* Space below each input field */
-        }
-
-
-       .right-section a:link { /* Normal unvisited link */
-            color: #00c7bd; /* Light blue color */
-        }
-
-        .right-section a:visited { /* Visited link */
-            color: #399fff; /* Custom color for visited links */
-        }
-
-        .right-section a:active { /* Active link - when the link is being clicked */
-            color: #FF4500; /* Custom color for active links */
-        }
-
-        .left-section, .right-section {
-            transition: flex 0.5s ease-in-out; /* 添加过渡效果 */
-        }
-        .grid-image {
-            width: 100%; /* 使图片宽度充满网格单元 */
-            height: 100%; /* 使图片高度充满网格单元 */
-            object-fit: cover; /* 保持图片的宽高比，裁剪多余部分 */
-            opacity: 0.5; /* 默认透明度 */
-            transition: opacity 0.3s ease-in-out; /* 缓进缓出效果 */
-        }
-
-        .grid-image:hover {
-            opacity: 1; /* 鼠标悬停时的透明度 */
-        }
-
-
-
-    </style>
+    <!-- Add any additional styles if needed -->
 </head>
 <body>
     <div class="left-section">
@@ -105,7 +14,7 @@
             <label for="query">问题是什么:</label><br>
             <input type="text" id="query" name="query"><br>
             <input type="submit" value="提交查询">
-            <div id="loadingMessage" style="display:none;">正在翻书，请稍候...那啥，确实挺慢的，估计得好几十秒，以后会优化！先等等</div>
+            <div id="loadingMessage" style="display:none;">正在翻书，请稍候...</div>
         </form>
     </div>
     <div class="right-section" id="results">
