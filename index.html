@@ -2,7 +2,117 @@
 <html>
 <head>
     <title>ArchIndex-解决问题的跨语言案例库</title>
-    <!-- Add any additional styles if needed -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgba(0, 0, 0, 0.8);
+            color: white; /* 将body内的文本颜色设置为白色 */
+        }
+
+        input[type="text"], input[type="submit"] {
+            background: rgb(95, 95, 95); /* 输入框和按钮的背景设置为黑色 */
+            color: white; /* 输入框和按钮的文本颜色设置为白色 */
+            border: 1px solid white; /* 添加白色边框以便在黑色背景上可见 */
+        }
+
+        input[type="submit"] {
+            background: rgb(24, 24, 24); /* 如果您想要按钮背景为白色，而不是黑色 */
+            color: rgb(255, 255, 255); /* 按钮文字颜色为黑色 */
+            border: none; /* 如果不需要边框，可以设置为none */
+        }
+
+        input[type="text"]::placeholder {
+            color: white; /* 输入框内提示文字的颜色设置为白色 */
+        }
+
+        /* 可能还需要设置a标签的颜色以确保链接也是白色的 */
+        a {
+            color: white;
+        }
+
+        .left-section, .right-section {
+
+            width: 50%;
+            float: left;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .project {
+            position: relative;
+            background-color: black;
+            margin-bottom: 20px;
+            overflow: hidden;
+            z-index: 1; /* 可以使其高于默认层级 */
+        }
+
+        .project img {
+            width: 100%;
+            opacity: 0.5;
+            height: 200px;
+            object-fit: cover;
+        }
+
+
+        .bg-image-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1; /* 和 .project 相同或稍低 */
+        }
+
+        .bg-image-container div {
+            position: absolute;
+            z-index: -1; /* 确保背景图片在内容下方 */
+        }
+
+        .project-info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: 2; /* 比背景图片的 z-index 高 */
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .project-description {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .user-query {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #summary {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+
+        /* 清除浮动 */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
 </head>
 <body>
     <div class="left-section">
@@ -17,8 +127,15 @@
             <input type="submit" value="提交查询">
             <div id="loadingMessage" style="display:none;">正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。</div>
         </form>
+        <div id="userQuery" class="user-query">
+            <!-- 用户的查询将显示在这里 -->
+        </div>
+        <!-- 添加一个容器来显示总结性描述 -->
+        <div id="summary">
+            <!-- 总结性描述将显示在这里 -->
+        </div>
     </div>
-    <div class="right-section" id="results">
+    <div class="right-section clearfix" id="results">
         <!-- 查询结果将显示在这里 -->
     </div>
     <script src="script.js"></script>
