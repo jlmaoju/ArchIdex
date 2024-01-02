@@ -275,7 +275,7 @@ function typeMessage(elementId, messages) {
     let messageIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingSpeed = 200; // Same typing speed for both typing and deleting
+    let typingSpeed = 60; // Same typing speed for both typing and deleting
 
     function type() {
         if (messageIndex >= messages.length) {
