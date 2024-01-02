@@ -9,20 +9,33 @@
             color: white; /* 将body内的文本颜色设置为白色 */
         }
 
-        input[type="text"], input[type="submit"] {
-            background: rgb(95, 95, 95); /* 输入框和按钮的背景设置为黑色 */
-            color: white; /* 输入框和按钮的文本颜色设置为白色 */
-            border: 1px solid white; /* 添加白色边框以便在黑色背景上可见 */
+        input[type="text"] {
+            width: 100%; /* 使输入框宽度为100% */
+            box-sizing: border-box; /* 使内边距和边框包含在宽度内 */
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #666; /* 暗色底线 */
+            color: rgb(255, 233, 106);
+            font-weight: bold;
+            font-size: 16px; /* 根据需要调整字体大小 */
+            padding: 10px 0; /* 增加上下内边距 */
+            text-align: center; /* 文本居中对齐 */
         }
 
         input[type="submit"] {
-            background: rgb(24, 24, 24); /* 如果您想要按钮背景为白色，而不是黑色 */
+            background: rgb(145, 145, 145); /* 如果您想要按钮背景为白色，而不是黑色 */
             color: rgb(255, 255, 255); /* 按钮文字颜色为黑色 */
             border: none; /* 如果不需要边框，可以设置为none */
+            margin-top: 10px;
         }
 
         input[type="text"]::placeholder {
-            color: white; /* 输入框内提示文字的颜色设置为白色 */
+            color: #aaa;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-bottom: 2px solid #fff; /* 聚焦时底线变亮 */
         }
 
         /* 可能还需要设置a标签的颜色以确保链接也是白色的 */
@@ -96,6 +109,8 @@
             font-size: 18px;
             text-align: center;
             margin-bottom: 20px;
+            color: rgb(255, 233, 106);
+            font-weight: bold;
         }
 
         #summary {
@@ -104,6 +119,14 @@
             padding: 20px;
             margin-top: 20px;
             display: none; /* 初始时不显示 */
+        }
+
+        .project-description, .project-title {
+            transition: background-color 0.5s; /* 添加平滑的背景色过渡 */
+        }
+
+        .project-description.hovered, .project-title.hovered {
+            background-color: black; /* 悬停时背景变为黑色 */
         }
 
 
@@ -117,13 +140,15 @@
 </head>
 <body>
     <div class="left-section">
-        <h1>ArchInlight：与落地建筑灵感同行，全球设计智慧为你出谋划策。</h1>
-        <p>ArchInlight是一个跨语言的案例库，致力于提供全球建筑设计的智慧与灵感。</p>
+        <h1>ArchInlight</h1>
+        <h2>与落地建筑灵感同行，全球设计智慧为你出谋划策。</h2>
+        <p>ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。</p>
         <p>请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”</p>
+        <p>尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。</p>
         <form id="queryForm">
-            <label for="api_key">Key:</label><br>
+            <label for="api_key">Key</label><br>
             <input type="text" id="api_key" name="api_key"><br>
-            <label for="query">请输入问题:</label><br>
+            <label for="query">请输入问题</label><br>
             <input type="text" id="query" name="query"><br>
             <input type="submit" value="提交查询">
             <div id="loadingMessage" style="display:none;">正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。</div>
