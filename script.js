@@ -51,6 +51,14 @@ function displayResults(data, userQuery) {
     // Set user query
     userQueryContainer.textContent = `查询: ${userQuery}`;
 
+    // 只有在有总结性描述的内容时才显示和填充#summary容器
+    if (data.concluding_compendium) {
+        var concludingCompendium = document.createElement('p');
+        concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
+        summaryContainer.appendChild(concludingCompendium);
+        summaryContainer.style.display = 'block'; // 现在将#summary容器设置为可见
+    }    
+
     // Display the summary description
     var concludingCompendium = document.createElement('p');
     concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
