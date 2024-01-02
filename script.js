@@ -1,4 +1,7 @@
-// 有哪些方法可以让建筑的使用者在设计阶段就参与进来？
+// 有哪些方法可以让建筑的使用者在设计阶段就参与进来？promptActive
+let currentPrompt = ''; 
+let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
+
 
 document.addEventListener('DOMContentLoaded', function() {
     let queryInput = document.querySelector('#query');
@@ -9,12 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
                     "针对传承传统戏曲文化这件事情能做什么设计？", 
                     "如何把结构建筑学的概念落实到大型高铁站设计中？"];
+    shuffleArray(prompts); // 在这里调用 shuffleArray 函数来洗牌数组
     typePrompts(queryInput, prompts);
 });
 
 document.getElementById('queryForm').addEventListener('submit', function(e) { 
     e.preventDefault(); // Prevent the default form submission
 
+    var queryInput = document.getElementById('query');
+    if (promptActive && !queryInput.value) {
+        queryInput.value = currentPrompt;
+    }
 
     // 显示加载提示信息
     var loadingMessage = document.getElementById('loadingMessage');
@@ -186,19 +194,17 @@ function typePrompts(input, prompts) {
     let isDeleting = false;
     let typingSpeed = 60;
     let typingDelay = 5000; // 打字后等待删除前的延迟时间
-    let promptActive = true; // 控制是否显示打字动画
     let typeTimeout; // 用于存储setTimeout的变量
 
     // 检查输入框是否聚焦或含文本
     function checkInputFocusOrText() {
         if (input === document.activeElement || input.value !== "") {
-            promptActive = false;
-            clearTimeout(typeTimeout); // 如果输入框聚焦或含文本，清除挂起的setTimeout
+            window.promptActive = false; // 更新全局变量
+            clearTimeout(typeTimeout); // 清除挂起的setTimeout
             input.placeholder = ''; // 清除占位符文本
         } else {
-            if (!promptActive) {
-                // 如果promptActive之前为false，重新开始打字动画
-                promptActive = true;
+            if (!window.promptActive) { // 检查全局变量
+                window.promptActive = true; // 更新全局变量
                 type(); // 重新启动打字动画
             }
         }
@@ -217,6 +223,7 @@ function typePrompts(input, prompts) {
         let prompt = prompts[promptIndex];
 
         if (!isDeleting) {
+            currentPrompt = prompt; // 保存完整的提示文本
             input.placeholder = prompt.substring(0, charIndex++);
             if (charIndex === prompt.length + 1) {
                 isDeleting = true;
@@ -234,8 +241,9 @@ function typePrompts(input, prompts) {
                 typeTimeout = setTimeout(type, typingSpeed);
             }
         }
-    }
 
+    }
+    window.promptActive = true;
     type(); // 开始打字效果
     checkInputFocusOrText(); // 初始检查
 }
