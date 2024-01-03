@@ -60,16 +60,9 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-
-        // 格式化新查询的数据以适应displayResults函数
-        const formattedResults = {
-            projects: data.search_results, // 假设search_results包含项目数组
-            concluding_compendium: data.concluding_compendium, // 如果后端也返回总结性描述
-            unique_id: data.unique_id // 保存unique_id以便更新URL
-        };
         
         // 显示结果
-        displayResults(formattedResults); // 传递格式化后的结果对象
+        displayResults(data); // 传递格式化后的结果对象
 
 
         // 更新URL，或者创建一个可供用户点击的保存链接
@@ -99,11 +92,8 @@ function displayResults(data) {
     // userQueryContainer.innerHTML = '';
     summaryContainer.innerHTML = '';
 
-
-    // 检查是否有unique_id，如果有，更新URL
-    if (data.unique_id) {
-        window.history.pushState({}, '', `?id=${data.unique_id}`);
-    }
+    // 更新URL
+    window.history.pushState({}, '', `?id=${data.unique_id}`);
 
 
     // 只有在有总结性描述的内容时才显示和填充#summary容器
