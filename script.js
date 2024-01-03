@@ -372,8 +372,16 @@ function getQueryParam(param) {
 // 获取和显示保存的查询和结果
 function fetchSavedQueryAndResults(queryId) {
     // 发起请求到后端获取保存的查询和结果
-    fetch(`path/to/your/endpoint?unique_id=${queryId}`)
-    .then(response => response.json())
+    // 发起请求到后端获取保存的查询和结果
+    fetch(`https://1wj7134184.iok.la/query/${queryId}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         // 显示保存的查询问题到输入框
         const queryInput = document.getElementById('query');
