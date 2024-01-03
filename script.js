@@ -62,8 +62,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         console.log('Success:', data);
         
         // 显示结果
-        displayResults(data); // 传递格式化后的结果对象
-
+        displayResults(data);
 
         // 更新URL，或者创建一个可供用户点击的保存链接
         window.history.pushState({}, '', `?id=${uniqueId}`);
@@ -117,8 +116,8 @@ function displayResults(data) {
     // summaryContainer.appendChild(concludingCompendium);
 
     // Check if the projects array exists and is not empty
-    if (data.projects && data.projects.length > 0) {
-        data.projects.forEach(function(project, index) {
+    if (data.results.projects && data.results.projects.length > 0) {
+        data.results.projects.forEach(function(project, index) {
             console.log(`Creating element for project ${index}:`, project);
 
             var projectElement = document.createElement('div');
