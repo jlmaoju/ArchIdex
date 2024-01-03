@@ -283,27 +283,6 @@ function typePrompts(input, prompts) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -408,6 +387,7 @@ function fetchSavedQueryAndResults(queryId) {
     .catch(error => {
         console.error('Error fetching saved query and results:', error);
     });
+    typePrompts(queryInput, prompts);
 }
 
 
@@ -415,6 +395,5 @@ function fetchSavedQueryAndResults(queryId) {
 
 // 根据问题更新网页标题
 function updatePageTitle(query) {
-    // 设置页面标题为查询问题，后跟您的品牌名称
-    document.title = query + " - ArchInlight 解决问题的跨语言案例库";
+    document.title = query + " - ArchInlight 解决问题的跨语言经验库";
 }
