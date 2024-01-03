@@ -384,7 +384,7 @@ function fetchSavedQueryAndResults(queryId) {
         
         typePrompts(queryInput, prompts);
         // 显示保存的查询问题到输入框
-        const queryInput = document.getElementById('query');
+        // const queryInput = document.getElementById('query');
         queryInput.value = data.query;  // 假设后端返回的对象中包含 'query' 字段
         
         // 显示保存的查询结果
