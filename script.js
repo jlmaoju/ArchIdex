@@ -64,6 +64,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         // 显示结果
         displayResults(data);
 
+
         // 更新URL，或者创建一个可供用户点击的保存链接
         window.history.pushState({}, '', `?id=${uniqueId}`);
 
@@ -82,6 +83,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
 
 
 function displayResults(data) {
+    updatePageTitle(data.query) 
     var resultsContainer = document.getElementById('results');
     // var userQueryContainer = document.getElementById('userQuery');
     var summaryContainer = document.getElementById('summary');
@@ -406,4 +408,13 @@ function fetchSavedQueryAndResults(queryId) {
     .catch(error => {
         console.error('Error fetching saved query and results:', error);
     });
+}
+
+
+
+
+// 根据问题更新网页标题
+function updatePageTitle(query) {
+    // 设置页面标题为查询问题，后跟您的品牌名称
+    document.title = query + " - ArchInlight 解决问题的跨语言案例库";
 }
