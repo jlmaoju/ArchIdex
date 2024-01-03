@@ -95,25 +95,20 @@ function displayResults(data) {
     window.history.pushState({}, '', `?id=${data.unique_id}`);
 
 
-    // 只有在有总结性描述的内容时才显示和填充#summary容器
-    if (data.concluding_compendium) {
-        var concludingCompendium = document.createElement('p');
-        concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
+
+    // 显示结论性描述
+    var concludingCompendium = document.createElement('p');
+    if (data.results && data.results.concluding_compendium !== undefined) {
+        concludingCompendium.innerHTML = data.results.concluding_compendium.replace(/\n/g, '<br>');
         summaryContainer.appendChild(concludingCompendium);
         summaryContainer.style.display = 'block'; // 现在将#summary容器设置为可见
-    }    
-
-    // Display the summary description
-    var concludingCompendium = document.createElement('p');
-    if (data.concluding_compendium !== undefined) {
-        concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
     } else {
-        // Handle the undefined case here, perhaps log an error or set a default value
+        // 如果concluding_compendium未定义，则记录错误并设置默认文本
         console.error('concluding_compendium is undefined');
         concludingCompendium.innerHTML = 'No summary available.';
+        summaryContainer.appendChild(concludingCompendium);
     }
-    // concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
-    // summaryContainer.appendChild(concludingCompendium);
+
 
     // Check if the projects array exists and is not empty
     if (data.results.projects && data.results.projects.length > 0) {
