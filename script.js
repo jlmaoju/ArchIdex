@@ -3,16 +3,19 @@ let currentPrompt = '';
 let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
 let typeTimeoutId;// 用于存储setTimeout的变量
 
+let queryInput = document.querySelector('#query');
+let prompts = ["如何设计一个能够灵活适应多种教学形式的教学空间？",
+                "如何设计公共厕所？", 
+                "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
+                "如何能够在高铁车站的候车厅里提现结构建筑学",
+                "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
+                "针对传承传统戏曲文化这件事情能做什么设计？", 
+                "如何把结构建筑学的概念落实到大型高铁站设计中？"];
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const queryId = getQueryParam('id');
-    let queryInput = document.querySelector('#query');
-    let prompts = ["如何设计一个能够灵活适应多种教学形式的教学空间？",
-                    "如何设计公共厕所？", 
-                    "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
-                    "如何能够在高铁车站的候车厅里提现结构建筑学",
-                    "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
-                    "针对传承传统戏曲文化这件事情能做什么设计？", 
-                    "如何把结构建筑学的概念落实到大型高铁站设计中？"];
+
     if (queryId) {
         // 如果存在ID参数，发起请求以获取和显示保存的查询和结果
         fetchSavedQueryAndResults(queryId);
