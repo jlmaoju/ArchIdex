@@ -401,7 +401,7 @@ function fetchSavedQueryAndResults(queryId) {
         
         // 显示保存的查询结果
         // displayResults(data.results.projects);
-        displayResults(data.results);
+        displayResults(data);
     })
     .catch(error => {
         console.error('Error fetching saved query and results:', error);
