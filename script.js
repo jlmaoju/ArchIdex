@@ -1,23 +1,28 @@
 // 有哪些方法可以让建筑的使用者在设计阶段就参与进来？promptActive
 let currentPrompt = ''; 
 let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
-
+let typeTimeoutId;// 用于存储setTimeout的变量
 
 document.addEventListener('DOMContentLoaded', function() {
-    let queryInput = document.querySelector('#query');
-    let prompts = ["如何设计一个能够灵活适应多种教学形式的教学空间？",
-                    "如何设计公共厕所？", 
-                    "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
-                    "如何能够在高铁车站的候车厅里提现结构建筑学",
-                    "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
-                    "针对传承传统戏曲文化这件事情能做什么设计？", 
-                    "如何把结构建筑学的概念落实到大型高铁站设计中？"];
-    shuffleArray(prompts); // 在这里调用 shuffleArray 函数来洗牌数组
-    typePrompts(queryInput, prompts);
-});
+    const queryId = getQueryParam('id');
+    if (queryId) {
+        // 如果存在ID参数，发起请求以获取和显示保存的查询和结果
+        fetchSavedQueryAndResults(queryId);
+    } else {
+        let queryInput = document.querySelector('#query');
+        let prompts = ["如何设计一个能够灵活适应多种教学形式的教学空间？",
+                        "如何设计公共厕所？", 
+                        "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
+                        "如何能够在高铁车站的候车厅里提现结构建筑学",
+                        "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
+                        "针对传承传统戏曲文化这件事情能做什么设计？", 
+                        "如何把结构建筑学的概念落实到大型高铁站设计中？"];
+        shuffleArray(prompts); // 在这里调用 shuffleArray 函数来洗牌数组
+        typePrompts(queryInput, prompts);
+}});
 
 document.getElementById('queryForm').addEventListener('submit', function(e) { 
-    e.preventDefault(); // Prevent the default form submission
+    e.preventDefault(); // 防止表单默认提交
 
     var queryInput = document.getElementById('query');
     if (promptActive && !queryInput.value) {
@@ -27,6 +32,8 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     // 显示加载提示信息
     var loadingMessage = document.getElementById('loadingMessage');
     loadingMessage.style.display = 'block';
+    loadingMessage.textContent = ''; // 重置文本内容
+    typeMessage('loadingMessage', messages); // 重新开始打字效果
 
     // Call this function when you want to start the effect
     typeMessage("loadingMessage", messages);
@@ -39,7 +46,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var apiKey = document.getElementById('api_key').value;
     var query = document.getElementById('query').value;
 
-    // Adjust this fetch URL to your actual app.py endpoint
+
     fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
         headers: {
@@ -53,29 +60,41 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        displayResults(data, query); // Pass the query to the display function
+
+        const uniqueId = data.unique_id;  // 假设后端返回中包含 unique_id 字段
+        const results = data.search_results; // 假设后端返回中包含 search_results 字段
+
+        // 显示结果
+        displayResults(results);
+
+        // 更新URL，或者创建一个可供用户点击的保存链接
+        window.history.pushState({}, '', `?id=${uniqueId}`);
+
         loadingMessage.style.display = 'none';
         submitButton.disabled = false;
+        resetLoadingMessage(); // 请求完成后重置加载提示信息
     })
     .catch((error) => {
         console.error('Error:', error);
         loadingMessage.style.display = 'none';
         submitButton.disabled = false;
+        resetLoadingMessage(); // 请求出错后重置加载提示信息
     });
 });
 
-function displayResults(data, userQuery) {
+
+
+function displayResults(data) {
     var resultsContainer = document.getElementById('results');
-    var userQueryContainer = document.getElementById('userQuery');
+    // var userQueryContainer = document.getElementById('userQuery');
     var summaryContainer = document.getElementById('summary');
 
     // Clear previous results
     resultsContainer.innerHTML = '';
-    userQueryContainer.innerHTML = '';
+    // userQueryContainer.innerHTML = '';
     summaryContainer.innerHTML = '';
 
-    // // Set user query
-    // userQueryContainer.textContent = `查询: ${userQuery}`;
+
 
     // 只有在有总结性描述的内容时才显示和填充#summary容器
     if (data.concluding_compendium) {
@@ -277,18 +296,25 @@ function shuffleArray(array) {
     }
 }
 
+
+
 function typeMessage(elementId, messages) {
+    // 清除现有的定时器
+    if (typeTimeoutId) {
+        clearTimeout(typeTimeoutId);
+    }
+
     let elem = document.getElementById(elementId);
     shuffleArray(messages); // 打乱消息顺序
     let messageIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typingSpeed = 60; // Same typing speed for both typing and deleting
 
     function type() {
+        // 如果已经遍历完所有消息，再次打乱并从头开始
         if (messageIndex >= messages.length) {
             messageIndex = 0;
-            shuffleArray(messages); // 当所有消息显示完，再次打乱顺序
+            shuffleArray(messages);
         }
 
         let message = messages[messageIndex];
@@ -296,25 +322,67 @@ function typeMessage(elementId, messages) {
         if (!isDeleting) {
             elem.textContent = message.substring(0, charIndex++);
             if (charIndex === message.length + 1) {
+                // 暂停一会儿，然后开始删除
                 isDeleting = true;
-                setTimeout(type, 5000); // Longer pause before deleting
+                typeTimeoutId = setTimeout(type, 5000); // Longer pause before deleting
             } else {
-                setTimeout(type, typingSpeed);
+                // 继续打字
+                typeTimeoutId = setTimeout(type, 60);
             }
         } else {
+            // 正在删除
             elem.textContent = message.substring(0, charIndex--);
             if (charIndex === 0) {
+                // 一个消息被完全删除后，转到下一个消息
                 isDeleting = false;
                 messageIndex++;
-                setTimeout(type, 500); // Longer pause before typing next message
+                typeTimeoutId = setTimeout(type, 500); // Longer pause before typing next message
             } else {
-                setTimeout(type, typingSpeed);
+                // 继续删除
+                typeTimeoutId = setTimeout(type, 60);
             }
         }
     }
 
-    type(); // Start the typing effect
+    type(); // 开始动画
 }
 
-// // Call this function when you want to start the effect
-// typeMessage("typing-effect", messages);
+
+// 用于清除loading信息和停止打字动画
+function resetLoadingMessage() {
+    if (typeTimeoutId) {
+        clearTimeout(typeTimeoutId);
+        typeTimeoutId = null;
+    }
+    let loadingMessage = document.getElementById('loadingMessage');
+    if (loadingMessage) {
+        loadingMessage.style.display = 'none';
+        loadingMessage.textContent = '';
+    }
+}
+
+
+// 应对带有查询参数的访问
+function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+}
+
+
+// 获取和显示保存的查询和结果
+function fetchSavedQueryAndResults(queryId) {
+    // 发起请求到后端获取保存的查询和结果
+    fetch(`path/to/your/endpoint?unique_id=${queryId}`)
+    .then(response => response.json())
+    .then(data => {
+        // 显示保存的查询问题到输入框
+        const queryInput = document.getElementById('query');
+        queryInput.value = data.query;  // 假设后端返回的对象中包含 'query' 字段
+        
+        // 显示保存的查询结果
+        displayResults(data.results.projects);
+    })
+    .catch(error => {
+        console.error('Error fetching saved query and results:', error);
+    });
+}
