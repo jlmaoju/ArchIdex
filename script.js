@@ -1,4 +1,4 @@
-// 有哪些方法可以让建筑的使用者在设计阶段就参与进来？promptActive
+
 let currentPrompt = ''; 
 let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
 let typeTimeoutId;// 用于存储setTimeout的变量
@@ -14,6 +14,7 @@ let prompts = ["如何设计一个能够灵活适应多种教学形式的教学�
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    let queryInput = document.querySelector('#query');
     const queryId = getQueryParam('id');
 
     if (queryId) {
