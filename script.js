@@ -61,11 +61,16 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     .then(data => {
         console.log('Success:', data);
 
-        const uniqueId = data.unique_id;  // 假设后端返回中包含 unique_id 字段
-        const results = data.search_results; // 假设后端返回中包含 search_results 字段
-
+        // 格式化新查询的数据以适应displayResults函数
+        const formattedResults = {
+            projects: data.search_results, // 假设search_results包含项目数组
+            concluding_compendium: data.concluding_compendium, // 如果后端也返回总结性描述
+            unique_id: data.unique_id // 保存unique_id以便更新URL
+        };
+        
         // 显示结果
-        displayResults(results);
+        displayResults(formattedResults); // 传递格式化后的结果对象
+
 
         // 更新URL，或者创建一个可供用户点击的保存链接
         window.history.pushState({}, '', `?id=${uniqueId}`);
@@ -94,6 +99,11 @@ function displayResults(data) {
     // userQueryContainer.innerHTML = '';
     summaryContainer.innerHTML = '';
 
+
+    // 检查是否有unique_id，如果有，更新URL
+    if (data.unique_id) {
+        window.history.pushState({}, '', `?id=${data.unique_id}`);
+    }
 
 
     // 只有在有总结性描述的内容时才显示和填充#summary容器
@@ -378,8 +388,7 @@ function getQueryParam(param) {
 
 // 获取和显示保存的查询和结果
 function fetchSavedQueryAndResults(queryId) {
-    // 发起请求到后端获取保存的查询和结果
-    // 发起请求到后端获取保存的查询和结果
+
     fetch(`https://1wj7134184.iok.la/query/${queryId}`, {
         method: 'GET'
     })
@@ -395,7 +404,8 @@ function fetchSavedQueryAndResults(queryId) {
         queryInput.value = data.query;  // 假设后端返回的对象中包含 'query' 字段
         
         // 显示保存的查询结果
-        displayResults(data.results.projects);
+        // displayResults(data.results.projects);
+        displayResults(data.results);
     })
     .catch(error => {
         console.error('Error fetching saved query and results:', error);
