@@ -106,7 +106,14 @@ function displayResults(data) {
 
     // Display the summary description
     var concludingCompendium = document.createElement('p');
-    concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
+    if (data.concluding_compendium !== undefined) {
+        concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
+    } else {
+        // Handle the undefined case here, perhaps log an error or set a default value
+        console.error('concluding_compendium is undefined');
+        concludingCompendium.innerHTML = 'No summary available.';
+    }
+    // concludingCompendium.innerHTML = data.concluding_compendium.replace(/\n/g, '<br>');
     // summaryContainer.appendChild(concludingCompendium);
 
     // Check if the projects array exists and is not empty
