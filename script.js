@@ -106,6 +106,7 @@ function displayResults(data) {
             concludingCompendium.innerHTML = 'No summary available.';
             summaryContainer.appendChild(concludingCompendium);
         }
+    }
 
 
     // Check if the projects array exists and is not empty
