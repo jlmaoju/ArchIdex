@@ -376,6 +376,7 @@ function fetchSavedQueryAndResults(queryId) {
         return response.json();
     })
     .then(data => {
+        typePrompts(queryInput, prompts);
         // 显示保存的查询问题到输入框
         const queryInput = document.getElementById('query');
         queryInput.value = data.query;  // 假设后端返回的对象中包含 'query' 字段
@@ -387,7 +388,7 @@ function fetchSavedQueryAndResults(queryId) {
     .catch(error => {
         console.error('Error fetching saved query and results:', error);
     });
-    typePrompts(queryInput, prompts);
+
 }
 
 
