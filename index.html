@@ -140,17 +140,19 @@
 </head>
 <body>
     <div class="left-section">
-        <h1>ArchInlight</h1>
-        <h2>与落地建筑灵感同行，全球设计智慧为你出谋划策。</h2>
-        <p>ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。</p>
-        <p>请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”</p>
-        <p>尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。</p>
+        <h1 data-i18n="header-title">ArchInlight</h1>
+        <h2 data-i18n="header-subtitle">与落地建筑灵感同行，全球设计智慧为你出谋划策。</h2>
+        <p data-i18n="intro-text-1">ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。</p>
+        <p data-i18n="intro-text-2">请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”</p>
+        <p data-i18n="intro-text-3">尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。</p>
         <form id="queryForm">
             <label for="api_key">Key</label><br>
             <input type="text" id="api_key" name="api_key"><br>
-            <label for="query">请输入问题</label><br>
+            <!-- <label for="query">请输入问题</label><br> -->
+            <label for="query" data-i18n="label-query">请输入问题</label><br>
             <input type="text" id="query" name="query"><br>
-            <input type="submit" value="提交查询">
+            <!-- <input type="submit" value="提交查询"> -->
+            <input type="submit" data-i18n-value="submit-query" value="提交查询">
             <div id="loadingMessage" style="display:none;">正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。</div>
         </form>
         <div id="userQuery" class="user-query">

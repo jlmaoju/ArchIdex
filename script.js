@@ -3,17 +3,46 @@ let currentPrompt = '';
 let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
 let typeTimeoutId;// 用于存储setTimeout的变量
 
+
+
+
+
+let prompts = [];
+const languagePrompts = {
+    'zh': [
+        "如何设计一个能够灵活适应多种教学形式的教学空间？",
+        "如何设计公共厕所？",
+        "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
+        "如何能够在高铁车站的候车厅里提现结构建筑学",
+        "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？",
+        "针对传承传统戏曲文化这件事情能做什么设计？",
+        "如何把结构建筑学的概念落实到大型高铁站设计中？"
+    ],
+    'en': [
+        "How to design a space that can flexibly adapt to various teaching methods?",
+        "How to design public restrooms?",
+        "For a hotel located on a mountain, how can the design maximize the scenery?",
+        "How can the concept of structural architecture be represented in the waiting hall of a high-speed train station?",
+        "What are the ways a museum can pay tribute to the local cultural history?",
+        "What designs can be made to inherit the traditional opera culture?",
+        "How can the concept of structural architecture be implemented into the design of a large high-speed railway station?"
+    ]
+    // ...其他语言的提示...
+};
+
 let queryInput = document.querySelector('#query');
-let prompts = ["如何设计一个能够灵活适应多种教学形式的教学空间？",
-                "如何设计公共厕所？", 
-                "一个位于山上的酒店建筑，如何能够最大限度利用景色？",
-                "如何能够在高铁车站的候车厅里提现结构建筑学",
-                "一个博物馆想要对本地的文化历史进行致敬都有哪些方法？", 
-                "针对传承传统戏曲文化这件事情能做什么设计？", 
-                "如何把结构建筑学的概念落实到大型高铁站设计中？"];
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
+    const userLanguage = navigator.language || navigator.userLanguage; 
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    console.log('Detected user language:', language);
+    // 根据检测到的语言设置prompts变量
+    prompts = languagePrompts[language];
+    // 根据用户的系统语言设置页面文本
+    setLanguage(language);
+
     let queryInput = document.querySelector('#query');
     const queryId = getQueryParam('id');
 
@@ -51,7 +80,9 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var apiKey = document.getElementById('api_key').value;
     var query = document.getElementById('query').value;
 
-
+    const userLanguage = navigator.language || navigator.userLanguage; 
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    console.log('Research language:', language);
     fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
         headers: {
@@ -60,6 +91,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         body: JSON.stringify({
             api_key: apiKey,
             query: query,
+            language: language,  // 这里添加了语言参数
         }),
     })
     .then(response => response.json())
@@ -85,6 +117,59 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     });
 });
 
+// 更新语言
+function setLanguage(language) {
+    // 这里定义了两种语言的文本
+    const texts = {
+        'en': {
+            'header-title': 'ArchInlight',
+            'header-subtitle': 'Walk with grounded architectural inspiration, global design wisdom at your service.',
+            'intro-text-1': 'ArchInlight is a cross-language case experience library that starts from your questions, committed to providing global architectural design wisdom and inspiration.',
+            'intro-text-2': 'Please tell us the problem you want to solve directly, such as: “How to design a teaching space that can flexibly adapt to various teaching methods?”',
+            'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.',
+            'submit-query': 'Submit Query',
+            'label-query': 'Please enter your question',
+            'loading-message': 'Loading, please wait... It’s slow due to prototype stage, please be patient.'
+            // ...其他文本
+        },
+        'zh': {
+            'header-title': 'ArchInlight',
+            'header-subtitle': '与落地建筑灵感同行，全球设计智慧为你出谋划策。',
+            'intro-text-1': 'ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。',
+            'intro-text-2': '请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”',
+            'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。',
+            'submit-query': '提交查询',
+            'label-query': '请输入问题',
+            'loading-message': '正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。'
+            // ...其他文本
+        }
+    };
+
+    // 更新页面上的文本
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[language][key]) {
+            el.textContent = texts[language][key];
+        }
+    });
+
+    // 更新输入元素的 placeholder 和 value 属性
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (texts[language][key]) {
+            el.placeholder = texts[language][key];
+        }
+    });
+
+    // 更新按钮的 value 属性
+    document.querySelectorAll('[data-i18n-value]').forEach(el => {
+        const key = el.getAttribute('data-i18n-value');
+        if (texts[language][key]) {
+            el.value = texts[language][key];
+        }
+    });
+}
+
 
 
 function displayResults(data) {
@@ -100,19 +185,6 @@ function displayResults(data) {
 
     // 更新URL
     window.history.pushState({}, '', `?id=${data.unique_id}`);
-
-    // // 确保data.results存在
-    // if (data.results) {
-    //     // 现在，我们假设data已经是results对象，并且包含projects和concluding_compendium
-    //     if (data.results.concluding_compendium) {
-    //         var concludingCompendium = document.createElement('p');
-    //         concludingCompendium.innerHTML = data.results.concluding_compendium.replace(/\n/g, '<br>');
-    //         summaryContainer.appendChild(concludingCompendium);
-    //     } else {
-    //         console.error('concluding_compendium is undefined');
-    //         concludingCompendium.innerHTML = 'No summary available.';
-    //         summaryContainer.appendChild(concludingCompendium);
-    //     }
 
 
     // 显示结论性描述
@@ -154,7 +226,6 @@ function displayResults(data) {
             bgImage.style.top = '0';
             bgImage.style.left = '0';
             bgImage.style.opacity = '0.5'; // 半透明效果
-            // 不要设置 z-index 或者设置为一个低于 `.project-info` 的正数
 
 
             // 将背景图像 div 添加到容器中
