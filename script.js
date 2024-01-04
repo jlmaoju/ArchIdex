@@ -193,7 +193,7 @@ function setLanguage(language) {
             'header-subtitle': 'Walk with grounded architectural inspiration, global design wisdom at your service.',
             'intro-text-1': 'ArchInlight is a cross-language case experience library that starts from your questions, committed to providing global architectural design wisdom and inspiration.',
             'intro-text-2': 'Please tell us the problem you want to solve directly, such as: “How to design a teaching space that can flexibly adapt to various teaching methods?”',
-            'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.',
+            'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.(In addition, the performance of search based on visual elements is very limited now, and we are working on a specialised visual search board.)',
             'submit-query': 'Submit Query',
             'label-query': 'Please enter your query',
             'loading-message': 'Loading, please wait... It’s slow due to prototype stage, please be patient.'
@@ -204,7 +204,7 @@ function setLanguage(language) {
             'header-subtitle': '与落地建筑灵感同行，全球设计智慧为你出谋划策。',
             'intro-text-1': 'ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。',
             'intro-text-2': '请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”',
-            'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。',
+            'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。（另外现在基于视觉元素的搜索性能很有限，我们正在研发专门的视觉搜索板块）',
             'submit-query': '提交查询',
             'label-query': '请输入问题',
             'loading-message': '正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。'
