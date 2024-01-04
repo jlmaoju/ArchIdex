@@ -40,11 +40,30 @@ const languagemessages = {
         "Arguing about architectural styles with historians...",
         "Reimbursing researchers for their flight tickets...",
         "Bringing back some inspiration from the future...",
-        "Warming up sentences to jump into your screen...",
         "Brainstorming with researchers around the world...",
         "Waking up lazy researchers...",
         "Collecting and organizing researchers' reports...",
         "Creating presentation documents...",
+        "Analyzing ancient blueprints for inspiration...",
+        "Cross-referencing global architectural trends...",
+        "Negotiating with the spirits of past architects...",
+        "Adjusting the scales on intricate models...",
+        "Calibrating design software to perfection...",
+        "Sketching out revolutionary building concepts...",
+        "Deciphering cryptic construction notes...",
+        "Consulting with AI for futuristic designs...",
+        "Racing against time to meet the deadline...",
+        "Crossing fingers and hoping for a masterpiece...",
+        "Juggling between modern and traditional aesthetics...",
+        "Tuning into the right creative frequency...",
+        "Delving into the psychology of space...",
+        "Archiving breakthrough ideas for future reference...",
+        "Brewing the fourth cup of coffee for late-night brainstorming...",
+        "Waiting for the eureka moment in design...",
+        "Doodling potential skyscraper silhouettes...",
+        "Wrangling with zoning laws and regulations...",
+        "Meditating for architectural enlightenment...",
+        "Celebrating small victories in design innovation..."
     ],
     'zh': [
         "正在召开建筑设计研究员动员大会...",
@@ -53,11 +72,30 @@ const languagemessages = {
         "正在和历史学家争论建筑风格...",
         "正在给研究员报销机票...",
         "正在从未来偷带回一些灵感...",
-        "正在让句子做热身运动，准备跳入你的屏幕...",
         "正在与世界各地的研究员进行思维风暴...",
         "正在叫醒偷懒的研究员...",
         "正在收集整理研究员的报告...",
         "正在制作汇报文件...",
+        "正在分析古代建筑图纸寻找灵感...",
+        "正在交叉参考全球建筑趋势...",
+        "正在与过去建筑师的精神协商...",
+        "正在调整复杂模型的比例...",
+        "正在校准设计软件以达到完美...",
+        "正在草拟革命性建筑概念...",
+        "正在破译难解的建筑笔记...",
+        "正在咨询AI未来设计...",
+        "正在与时间赛跑以满足最后期限...",
+        "正在交叉手指希望能创作出杰作...",
+        "正在在现代与传统美学之间游走...",
+        "正在调整到正确的创造性频率...",
+        "正在深入研究空间心理学...",
+        "正在归档突破性的想法以供将来参考...",
+        "正在煮第四杯咖啡进行深夜头脑风暴...",
+        "正在等待设计中的灵光一现...",
+        "正在涂鸦潜在的摩天大楼轮廓...",
+        "正在与分区法律和规章争执...",
+        "正在冥想以求建筑启示...",
+        "正在庆祝设计创新的小胜利..."
     ]
 };
 
@@ -66,7 +104,7 @@ const languagemessages = {
 
 document.addEventListener('DOMContentLoaded', function() {
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     // 根据检测到的语言设置prompts变量
     prompts = languagePrompts[language];
@@ -120,7 +158,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var query = document.getElementById('query').value;
 
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Research language:', language);
     fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
@@ -194,6 +232,7 @@ function setLanguage(language) {
             'intro-text-1': 'ArchInlight is a cross-language case experience library that starts from your questions, committed to providing global architectural design wisdom and inspiration.',
             'intro-text-2': 'Please tell us the problem you want to solve directly, such as: “How to design a teaching space that can flexibly adapt to various teaching methods?”',
             'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.(In addition, the performance of search based on visual elements is very limited now, and we are working on a specialised visual search board.)',
+            'intro-text-4': "AI's reasoning takes time, please bear with me, about 30~60 seconds.",
             'submit-query': 'Submit Query',
             'label-query': 'Please enter your query',
             'loading-message': 'Loading, please wait... It’s slow due to prototype stage, please be patient.'
@@ -205,6 +244,7 @@ function setLanguage(language) {
             'intro-text-1': 'ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。',
             'intro-text-2': '请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”',
             'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。（另外现在基于视觉元素的搜索性能很有限，我们正在研发专门的视觉搜索板块）',
+            'intro-text-4': 'AI的推理需要时间，请海涵，大概30~60秒。',
             'submit-query': '提交查询',
             'label-query': '请输入问题',
             'loading-message': '正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。'
@@ -425,7 +465,7 @@ function shuffleArray(array) {
 
 function typeMessage(elementId, messages) {
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     messages = languagemessages[language];
     // 清除现有的定时器
