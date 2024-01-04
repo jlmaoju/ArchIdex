@@ -30,7 +30,37 @@ const languagePrompts = {
     // ...其他语言的提示...
 };
 
-let queryInput = document.querySelector('#query');
+// Messages to cycle through
+let messages = [];
+const languagemessages = {
+    'en': [
+        "Convening a mobilization meeting for architectural design researchers...",
+        "Searching for case studies in every direction...",
+        "Preparing the third cup of coffee for researchers...",
+        "Arguing about architectural styles with historians...",
+        "Reimbursing researchers for their flight tickets...",
+        "Bringing back some inspiration from the future...",
+        "Warming up sentences to jump into your screen...",
+        "Brainstorming with researchers around the world...",
+        "Waking up lazy researchers...",
+        "Collecting and organizing researchers' reports...",
+        "Creating presentation documents...",
+    ],
+    'zh': [
+        "正在召开建筑设计研究员动员大会...",
+        "正在兵分一万路找案例查资料...",
+        "正在为研究员们准备第三杯咖啡...",
+        "正在和历史学家争论建筑风格...",
+        "正在给研究员报销机票...",
+        "正在从未来偷带回一些灵感...",
+        "正在让句子做热身运动，准备跳入你的屏幕...",
+        "正在与世界各地的研究员进行思维风暴...",
+        "正在叫醒偷懒的研究员...",
+        "正在收集整理研究员的报告...",
+        "正在制作汇报文件...",
+    ]
+};
+
 
 
 
@@ -42,6 +72,15 @@ document.addEventListener('DOMContentLoaded', function() {
     prompts = languagePrompts[language];
     // 根据用户的系统语言设置页面文本
     setLanguage(language);
+
+    const textarea = document.getElementById('query');
+    // 调整textarea高度以适应内容
+    function autoResize() {
+        this.style.height = '10px';  // 重置高度
+        this.style.height = this.scrollHeight + 'px';  // 根据内容设置新高度
+    }
+    // 给textarea添加input事件监听器
+    textarea.addEventListener('input', autoResize, false);
 
     let queryInput = document.querySelector('#query');
     const queryId = getQueryParam('id');
@@ -128,7 +167,7 @@ function setLanguage(language) {
             'intro-text-2': 'Please tell us the problem you want to solve directly, such as: “How to design a teaching space that can flexibly adapt to various teaching methods?”',
             'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.',
             'submit-query': 'Submit Query',
-            'label-query': 'Please enter your question',
+            'label-query': 'Please enter your query',
             'loading-message': 'Loading, please wait... It’s slow due to prototype stage, please be patient.'
             // ...其他文本
         },
@@ -282,18 +321,6 @@ function displayResults(data) {
 
 
 
-// Messages to cycle through
-let messages = ["正在召开建筑设计研究员动员大会...",
-                "正在兵分一万路找案例查资料...",
-                "正在为研究员们准备第三杯咖啡...",
-                "正在和历史学家争论建筑风格...",
-                "正在给研究员报销机票...",
-                "正在从未来偷带回一些灵感...",
-                "正在让句子做热身运动，准备跳入你的屏幕...",
-                "正在与世界各地的研究员进行思维风暴...",                
-                "正在叫醒偷懒的研究员...",
-                "正在收集整理研究员的报告...",
-                "正在制作汇报文件...", ];
 
 
 
@@ -369,6 +396,10 @@ function shuffleArray(array) {
 
 
 function typeMessage(elementId, messages) {
+
+    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    console.log('Detected user language:', language);
+    messages = languagemessages[language];
     // 清除现有的定时器
     if (typeTimeoutId) {
         clearTimeout(typeTimeoutId);

@@ -20,7 +20,30 @@
             font-size: 16px; /* 根据需要调整字体大小 */
             padding: 10px 0; /* 增加上下内边距 */
             text-align: center; /* 文本居中对齐 */
+            margin-bottom: 20px;
         }
+
+        textarea {
+            margin-top: 18px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #666;
+            color: rgb(255, 233, 106);
+            font-weight: bold;
+            font-size: 18px;
+            padding: 0px 0;
+            text-align: center;
+            overflow: hidden;
+            resize: none; /* 禁用用户手动调整大小 */
+            font-family: "Arial Black", Gadget, sans-serif; /* 设置为黑体风格的字体 */
+            font-size: 18px; /* 或者您希望的字体大小 */
+            line-height: 1.2; /* 控制行高 */
+            height: 22px; /* 控制高度，确保它足够容纳一行文本 */
+            margin-bottom: 20px;
+        }
+
 
         input[type="submit"] {
             background: rgb(145, 145, 145); /* 如果您想要按钮背景为白色，而不是黑色 */
@@ -150,7 +173,8 @@
             <input type="text" id="api_key" name="api_key"><br>
             <!-- <label for="query">请输入问题</label><br> -->
             <label for="query" data-i18n="label-query">请输入问题</label><br>
-            <input type="text" id="query" name="query"><br>
+            <!-- <input type="text" id="query" name="query"><br> -->
+            <textarea id="query" name="query"></textarea><br>
             <!-- <input type="submit" value="提交查询"> -->
             <input type="submit" data-i18n-value="submit-query" value="提交查询">
             <div id="loadingMessage" style="display:none;">正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。</div>
