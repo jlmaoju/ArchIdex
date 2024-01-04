@@ -66,7 +66,7 @@ const languagemessages = {
 
 document.addEventListener('DOMContentLoaded', function() {
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     // 根据检测到的语言设置prompts变量
     prompts = languagePrompts[language];
@@ -120,7 +120,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var query = document.getElementById('query').value;
 
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Research language:', language);
     fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
@@ -149,12 +149,40 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         resetLoadingMessage(); // 请求完成后重置加载提示信息
     })
     .catch((error) => {
-        console.error('Error:', error);
-        loadingMessage.style.display = 'none';
-        submitButton.disabled = false;
-        resetLoadingMessage(); // 请求出错后重置加载提示信息
+        console.error('There has been a problem with your fetch operation:', error);
+        displayError(error.message); // 调用显示错误的函数
     });
 });
+
+
+// 用于在页面上显示错误的函数
+function displayError(errorMessage) {
+    // 创建一个新的div元素来显示错误
+    const errorElement = document.createElement('div');
+    errorElement.textContent = errorMessage;
+    
+    // 自定义的额外内容
+    const additionalContent = ' Please try again later or contact support.';
+    
+    // 创建另一个div来显示额外内容
+    const additionalElement = document.createElement('div');
+    additionalElement.textContent = additionalContent;
+    
+    // 设置样式
+    errorElement.style.color = 'red';
+    additionalElement.style.color = 'red';
+    
+    // 将错误消息和额外内容添加到页面上
+    const container = document.createElement('div');
+    container.appendChild(errorElement);
+    container.appendChild(additionalElement);
+  
+    document.body.appendChild(container);
+  }
+
+
+
+
 
 // 更新语言
 function setLanguage(language) {
@@ -396,8 +424,8 @@ function shuffleArray(array) {
 
 
 function typeMessage(elementId, messages) {
-
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const userLanguage = navigator.language || navigator.userLanguage; 
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     messages = languagemessages[language];
     // 清除现有的定时器
