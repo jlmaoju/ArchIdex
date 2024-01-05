@@ -104,7 +104,7 @@ const languagemessages = {
 
 document.addEventListener('DOMContentLoaded', function() {
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     // 根据检测到的语言设置prompts变量
     prompts = languagePrompts[language];
@@ -158,7 +158,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
     var query = document.getElementById('query').value;
 
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Research language:', language);
     fetch('https://1wj7134184.iok.la/query', {
         method: 'POST',
@@ -465,7 +465,7 @@ function shuffleArray(array) {
 
 function typeMessage(elementId, messages) {
     const userLanguage = navigator.language || navigator.userLanguage; 
-    const language = userLanguage.startsWith('en') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
+    const language = userLanguage.startsWith('zh') ? 'zh' : 'en'; // 如果是中文则使用'zh', 否则默认为英文'en'
     console.log('Detected user language:', language);
     messages = languagemessages[language];
     // 清除现有的定时器
