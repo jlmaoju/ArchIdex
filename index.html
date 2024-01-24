@@ -14,12 +14,12 @@
             box-sizing: border-box; /* 使内边距和边框包含在宽度内 */
             background-color: transparent;
             border: none;
-            border-bottom: 1px solid #666; /* 暗色底线 */
+            border-bottom: 1px solid #666; 
             color: rgb(255, 233, 106);
             font-weight: bold;
-            font-size: 16px; /* 根据需要调整字体大小 */
-            padding: 10px 0; /* 增加上下内边距 */
-            text-align: center; /* 文本居中对齐 */
+            font-size: 16px; 
+            padding: 10px 0; 
+            text-align: center; 
             margin-bottom: 20px;
         }
 
@@ -40,15 +40,14 @@
             font-family: "Arial Black", Gadget, sans-serif; /* 设置为黑体风格的字体 */
             font-size: 18px; /* 或者您希望的字体大小 */
             line-height: 1.2; /* 控制行高 */
-            /* height: 22px; 控制高度，确保它足够容纳一行文本 */
             margin-bottom: 20px;
         }
 
 
         input[type="submit"] {
-            background: rgb(145, 145, 145); /* 如果您想要按钮背景为白色，而不是黑色 */
+            background: rgb(145, 145, 145); 
             color: rgb(255, 255, 255); /* 按钮文字颜色为黑色 */
-            border: none; /* 如果不需要边框，可以设置为none */
+            border: none; 
             margin-top: 10px;
         }
 
@@ -61,7 +60,6 @@
             border-bottom: 2px solid #fff; /* 聚焦时底线变亮 */
         }
 
-        /* 可能还需要设置a标签的颜色以确保链接也是白色的 */
         a {
             color: white;
         }
@@ -79,7 +77,7 @@
             background-color: black;
             margin-bottom: 20px;
             overflow: hidden;
-            z-index: 1; /* 可以使其高于默认层级 */
+            z-index: 1; 
         }
 
         .project img {
@@ -94,12 +92,12 @@
             position: relative;
             height: 200px;
             overflow: hidden;
-            z-index: 1; /* 和 .project 相同或稍低 */
+            z-index: 1; 
         }
 
         .bg-image-container div {
             position: absolute;
-            z-index: -1; /* 确保背景图片在内容下方 */
+            z-index: -1; 
         }
 
         .project-info {
@@ -115,7 +113,7 @@
             color: white;
             padding: 10px;
             box-sizing: border-box;
-            z-index: 2; /* 比背景图片的 z-index 高 */
+            z-index: 2; 
         }
 
         .project-title {
@@ -159,16 +157,28 @@
             clear: both;
             display: table;
         }
+        .header-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .version {
+            margin-left: 30px; /* 根据需要调整间距 */
+        }
     </style>
 </head>
 <body>
     <div class="left-section">
-        <h1 data-i18n="header-title">ArchInlight</h1>
-        <h2 data-i18n="header-subtitle">与落地建筑灵感同行，全球设计智慧为你出谋划策。</h2>
-        <p data-i18n="intro-text-1">ArchInlight是一个从问题出发的跨语言案例经验库，致力于提供全球建筑设计的智慧与灵感。</p>
-        <p data-i18n="intro-text-2">请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”</p>
-        <p data-i18n="intro-text-3">尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。</p>
-        <p data-i18n="intro-text-4">AI的推理需要时间，请海涵，大概30~60秒。</p>
+        <!-- 新的父容器 -->
+        <div class="header-container">
+            <h1 data-i18n="header-title"></h1>
+            <p data-i18n="intro-text-5" class="version"></p>
+        </div>
+        <h2 data-i18n="header-subtitle"></h2>
+        <p data-i18n="intro-text-1"></p>
+        <p data-i18n="intro-text-2"></p>
+        <p data-i18n="intro-text-3"></p>
+        <p data-i18n="intro-text-4"></p>
         <form id="queryForm">
             <label for="api_key">Key</label><br>
             <input type="text" id="api_key" name="api_key"><br>
@@ -178,18 +188,18 @@
             <textarea id="query" name="query"></textarea><br>
             <!-- <input type="submit" value="提交查询"> -->
             <input type="submit" data-i18n-value="submit-query" value="提交查询">
-            <div id="loadingMessage" style="display:none;">正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。</div>
+            <div id="loadingMessage" style="display:none;">请稍候...</div>
         </form>
         <div id="userQuery" class="user-query">
-            <!-- 用户的查询将显示在这里 -->
+            <!-- 用户的查询 -->
         </div>
-        <!-- 添加一个容器来显示总结性描述 -->
+        <!-- 容器总结性描述 -->
         <div id="summary">
-            <!-- 总结性描述将显示在这里 -->
+            <!-- 总结性描述 -->
         </div>
     </div>
     <div class="right-section clearfix" id="results">
-        <!-- 查询结果将显示在这里 -->
+        <!-- 查询结果 -->
     </div>
     <script src="script.js"></script>
 </body>

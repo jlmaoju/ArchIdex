@@ -1,10 +1,7 @@
 
 let currentPrompt = ''; 
-let promptActive = true; // 声明变量并初始化为 false，注意拼写正确
-let typeTimeoutId;// 用于存储setTimeout的变量
-
-
-
+let promptActive = true; 
+let typeTimeoutId;
 
 
 let prompts = [];
@@ -27,7 +24,6 @@ const languagePrompts = {
         "What designs can be made to inherit the traditional opera culture?",
         "How can the concept of structural architecture be implemented into the design of a large high-speed railway station?"
     ]
-    // ...其他语言的提示...
 };
 
 // Messages to cycle through
@@ -128,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchSavedQueryAndResults(queryId);
     } else {
 
-        shuffleArray(prompts); // 在这里调用 shuffleArray 函数来洗牌数组
+        shuffleArray(prompts); // 洗牌数组
         typePrompts(queryInput, prompts);
 }});
 
@@ -168,7 +164,7 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         body: JSON.stringify({
             api_key: apiKey,
             query: query,
-            language: language,  // 这里添加了语言参数
+            language: language,  
         }),
     })
     .then(response => response.json())
@@ -178,8 +174,6 @@ document.getElementById('queryForm').addEventListener('submit', function(e) {
         // 显示结果
         displayResults(data);
 
-
-        // 更新URL，或者创建一个可供用户点击的保存链接
         window.history.pushState({}, '', `?id=${uniqueId}`);
 
         loadingMessage.style.display = 'none';
@@ -224,7 +218,6 @@ function displayError(errorMessage) {
 
 // 更新语言
 function setLanguage(language) {
-    // 这里定义了两种语言的文本
     const texts = {
         'en': {
             'header-title': 'ArchInlight',
@@ -233,10 +226,11 @@ function setLanguage(language) {
             'intro-text-2': 'Please tell us the problem you want to solve directly, such as: “How to design a teaching space that can flexibly adapt to various teaching methods?”',
             'intro-text-3': 'Try not to enter just a short keyword, as accurately described problems are more likely to yield quality results.(In addition, the performance of search based on visual elements is very limited now, and we are working on a specialised visual search board.)',
             'intro-text-4': "AI's reasoning takes time, please bear with me, about 30~60 seconds.",
+            'intro-text-5': 'v0.1-Early Access',
             'submit-query': 'Submit Query',
             'label-query': 'Please enter your query',
             'loading-message': 'Loading, please wait... It’s slow due to prototype stage, please be patient.'
-            // ...其他文本
+
         },
         'zh': {
             'header-title': 'ArchInlight',
@@ -245,14 +239,15 @@ function setLanguage(language) {
             'intro-text-2': '请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”',
             'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。（另外现在基于视觉元素的搜索性能很有限，我们正在研发专门的视觉搜索板块）',
             'intro-text-4': 'AI的推理需要时间，请海涵，大概30~60秒。',
+            'intro-text-5': 'v0.1 - 龙年新春 Early Access 版',
             'submit-query': '提交查询',
             'label-query': '请输入问题',
-            'loading-message': '正在翻书，请稍候...因为是原型阶段，所以很慢，请耐心。'
-            // ...其他文本
+            'loading-message': '请稍候...'
+
         }
     };
 
-    // 更新页面上的文本
+    // 更新文本
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (texts[language][key]) {
@@ -327,18 +322,18 @@ function displayResults(data) {
             bgImage.style.backgroundImage = 'url(' + project.image_url + ')';
             bgImage.style.backgroundSize = 'cover';
             bgImage.style.backgroundPosition = 'center';
-            bgImage.style.height = '200px'; // 确保这与`.project`的高度相同
-            bgImage.style.width = '100%'; // 确保这覆盖整个`.project`
+            bgImage.style.height = '200px'; 
+            bgImage.style.width = '100%'; 
             bgImage.style.position = 'absolute';
             bgImage.style.top = '0';
             bgImage.style.left = '0';
-            bgImage.style.opacity = '0.5'; // 半透明效果
+            bgImage.style.opacity = '0.5'; // 半透明
 
 
             // 将背景图像 div 添加到容器中
             bgImageContainer.appendChild(bgImage);
 
-            // 然后将 bgImageContainer 添加到您的项目元素中
+            // 将 bgImageContainer 添加到项目元素
             projectElement.appendChild(bgImageContainer);
 
             
