@@ -239,7 +239,7 @@ function setLanguage(language) {
             'intro-text-2': '请直接告诉我你想解决的问题，比如：“如何设计一个能够灵活适应多种教学形式的教学空间？”',
             'intro-text-3': '尽量不要只输入一个简短的关键词哦，准确描述的问题容易得到优质结果。（另外现在基于视觉元素的搜索性能很有限，我们正在研发专门的视觉搜索板块）',
             'intro-text-4': 'AI的推理需要时间，请海涵，大概30~60秒。',
-            'intro-text-5': 'v0.1 - 龙年新春 Early Access 版',
+            'intro-text-5': 'v0.1 - 龙年新春 Early Access 版 by 知筑社技术部',
             'submit-query': '提交查询',
             'label-query': '请输入问题',
             'loading-message': '请稍候...'
